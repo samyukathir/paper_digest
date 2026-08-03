@@ -1,0 +1,53 @@
+name: Paper Digest
+
+on:
+  schedule:
+    - cron: "0 13 * * 1"  # 13:00 UTC every Monday
+  workflow_dispatch: {}     # allows manual "Run workflow" from the Actions tab
+
+permissions:
+  contents: write  # needed to commit new digest files back to the repo
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip and sentence-transformers model
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/torch
+            ~/.cache/huggingface
+          key: ${{ runner.os }}-paperdigest-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run digest
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Only needed if you switch delivery.method to "email" in config.yaml:
+          # SMTP_USER: ${{ secrets.SMTP_USER }}
+          # SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          # EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          # EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          SEMANTIC_SCHOLAR_API_KEY: ${{ secrets.SEMANTIC_SCHOLAR_API_KEY }}
+          OPENALEX_MAILTO: ${{ secrets.OPENALEX_MAILTO }}
+          SPRINGER_NATURE_API_KEY: ${{ secrets.SPRINGER_NATURE_API_KEY }}
+          ELSEVIER_API_KEY: ${{ secrets.ELSEVIER_API_KEY }}
+        run: python main.py
+
+      - name: Commit new digest + updated state
+        run: |
+          git config user.name "paper-digest-bot"
+          git config user.email "actions@github.com"
+          git add digests/ .state/
+          git diff --cached --quiet || git commit -m "Add digest for $(date -u +%F)"
+          git push

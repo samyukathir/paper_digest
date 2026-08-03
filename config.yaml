@@ -1,0 +1,126 @@
+# =========================================================================
+# Paper Digest Agent — configuration
+# Edit the values below; no code changes needed for basic tuning.
+# =========================================================================
+
+# One paragraph describing what you care about. This is embedded and
+# compared against every candidate paper's title+abstract for the
+# cheap pre-filter, and is also given to Claude for the final digest pass.
+interest_description: >
+  Research on AI/ML methods and their application to healthcare and biology,
+  including: large language models, deep learning architectures, and
+  reasoning/evaluation methods; AI applied to healthcare and electronic
+  health records (EHR), clinical decision support, and clinical NLP;
+  computational pathology and cell/tissue image analysis with AI;
+  genomics and bioinformatics methods, including AI applied to genomic
+  and multi-omics data.
+
+# Minimum cosine-similarity score (0-1) for a paper to survive the
+# embedding pre-filter and be considered as a candidate for the digest.
+# Lower = more papers pass through (more noise), higher = stricter.
+min_relevance_score: 0.30
+
+# Max number of pre-filtered candidates sent to Claude for the final
+# relevance judgment + digest write-up. Keeps API cost bounded.
+max_candidates_for_llm: 30
+
+# Max number of papers included in the final digest email.
+max_digest_items: 15
+
+# How many days back to look for new papers on each run.
+# Keep this >= your run frequency so nothing slips through gaps.
+lookback_days: 2
+
+# ---------------------------------------------------------------------
+# Sources
+# ---------------------------------------------------------------------
+sources:
+  arxiv:
+    enabled: true
+    categories: ["cs.AI", "cs.LG", "cs.CL", "q-bio.GN", "q-bio.QM"]
+    max_results: 100
+
+  pubmed:
+    enabled: true
+    # PubMed has no useful category system for this; use search terms.
+    search_terms:
+      - "artificial intelligence electronic health record"
+      - "deep learning clinical decision support"
+      - "AI digital pathology"
+      - "machine learning genomics"
+      - "AI bioinformatics"
+    max_results: 60
+
+  biorxiv_medrxiv:
+    enabled: true
+    servers: ["biorxiv", "medrxiv"]
+    max_results: 100
+
+  semantic_scholar:
+    enabled: true
+    query: "AI healthcare OR machine learning genomics OR AI pathology OR clinical NLP"
+    max_results: 60
+    # Optional: get a free key at https://www.semanticscholar.org/product/api
+    # to raise rate limits. Leave blank to use the public (lower) rate limit.
+    api_key_env: "SEMANTIC_SCHOLAR_API_KEY"
+
+  europe_pmc:
+    enabled: true
+    query: "(artificial intelligence) AND (electronic health record OR pathology OR genomics OR bioinformatics)"
+    max_results: 60
+
+  openalex:
+    enabled: true
+    query: "AI healthcare electronic health record pathology genomics bioinformatics"
+    max_results: 60
+    # Optional but recommended: your email, for OpenAlex's polite pool
+    # (higher rate limits, no key required).
+    mailto_env: "OPENALEX_MAILTO"
+
+  nature:
+    enabled: false  # set true once you have a Springer Nature API key
+    query: "artificial intelligence healthcare genomics pathology"
+    max_results: 40
+    api_key_env: "SPRINGER_NATURE_API_KEY"
+
+  sciencedirect:
+    enabled: false  # set true once you have an Elsevier API key
+    # NOTE: abstract/metadata-only search without an institutional
+    # subscription. See README for setup + limitations.
+    query: "artificial intelligence healthcare genomics pathology"
+    max_results: 40
+    api_key_env: "ELSEVIER_API_KEY"
+
+  google_scholar:
+    enabled: false
+    # Google Scholar has no official API. This is a placeholder for an
+    # optional SerpApi-backed fetcher (paid third-party service,
+    # https://serpapi.com) — not implemented by default. See README.
+    api_key_env: "SERPAPI_API_KEY"
+
+# ---------------------------------------------------------------------
+# Delivery
+# ---------------------------------------------------------------------
+delivery:
+  method: "file"
+  file:
+    # Folder (relative to the repo root) that digest files are written
+    # into. Each run creates one new markdown file here — commit it (or
+    # let the GitHub Actions workflow commit it for you) to keep a
+    # permanent, browsable archive of every digest in the repo itself.
+    output_dir: "digests"
+
+  # Optional alternative — off by default. Flip method to "email" above
+  # and fill in EMAIL_TO/EMAIL_FROM/SMTP_USER/SMTP_PASS in .env to use it.
+  email:
+    smtp_host: "smtp.gmail.com"
+    smtp_port: 465
+    to_env: "EMAIL_TO"
+    from_env: "EMAIL_FROM"
+    user_env: "SMTP_USER"
+    pass_env: "SMTP_PASS"
+
+# Claude model used for the final relevance judgment + digest write-up.
+llm:
+  model: "claude-haiku-4-5-20251001"
+  max_tokens: 2000

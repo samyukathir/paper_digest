@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.pyc
+.DS_Store
+
+# .state/ is intentionally NOT ignored — it's committed by the GitHub
+# Actions workflow so "already seen" tracking persists across runs.
