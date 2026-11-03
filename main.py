@@ -76,6 +76,7 @@ def main():
         config["interest_description"],
         min_score=config.get("min_relevance_score", 0.30),
         top_k=config.get("max_candidates_for_llm", 30),
+        interest_topics=config.get("interest_topics"),
     )
     print(f"Pre-filtered candidates for LLM pass: {len(candidates)}", file=sys.stderr)
 
@@ -121,6 +122,7 @@ def build_digest_items(config):
         config["interest_description"],
         min_score=config.get("min_relevance_score", 0.30),
         top_k=config.get("max_candidates_for_llm", 30),
+        interest_topics=config.get("interest_topics"),
     )
 
     digest_items = build_digest(
