@@ -3,37 +3,72 @@
 # Edit the values below; no code changes needed for basic tuning.
 # =========================================================================
 
-# One paragraph describing what you care about. This is embedded and
-# compared against every candidate paper's title+abstract for the
-# cheap pre-filter, and is also given to Claude for the final digest pass.
+# One paragraph describing what you care about. Claude reads this in the
+# final digest pass. (The embedding pre-filter uses interest_topics below.)
 interest_description: >
   Research on AI/ML methods and their application to healthcare and biology,
-  including: large language models, deep learning architectures, and
-  reasoning/evaluation methods; AI applied to healthcare and electronic
-  health records (EHR), clinical decision support, and clinical NLP;
-  computational pathology and cell/tissue image analysis with AI;
-  genomics and bioinformatics methods, including AI applied to genomic
-  and multi-omics data; AI and machine learning for drug discovery and
-  drug design (also called computational, in silico, or computer-aided
-  drug design, CADD, and cheminformatics), including: target
-  identification, hit identification and lead optimization; virtual
-  screening, molecular docking, and protein-ligand binding affinity
-  prediction; structure-based and ligand-based drug design and QSAR;
-  molecular property and ADMET/toxicity prediction; drug-target and
-  drug-drug interaction prediction; generative models for de novo
-  molecule, peptide, antibody, and protein design; drug repurposing
-  and repositioning; and retrosynthesis planning.
+  including: large language models (LLMs), foundation models, and generative
+  AI; deep learning architectures such as transformers, attention, state
+  space models, mixture-of-experts, graph neural networks, and diffusion
+  models; reasoning, chain-of-thought, in-context learning, retrieval-augmented
+  generation, agents, alignment, hallucination, and benchmarking/evaluation
+  methods. AI applied to healthcare and medicine (clinical AI, medical AI,
+  digital health), including electronic health records (EHR/EMR), clinical
+  risk and outcome prediction, clinical decision support, and clinical,
+  medical, and biomedical NLP and medical LLMs on clinical notes and text.
+  Computational and digital pathology, including deep learning on
+  histopathology and whole-slide images (WSI), H&E slides, multiple instance
+  learning, pathology foundation models, cell and nucleus segmentation,
+  tissue image analysis, and spatial omics. Genomics, bioinformatics, and
+  computational biology, including machine learning on genomic,
+  transcriptomic, single-cell (scRNA-seq), epigenomic, proteomic, and
+  multi-omics data, DNA/genomic language models, variant effect and gene
+  expression prediction, and multi-omics integration. Medical and
+  biomedical image processing and analysis, including radiology and medical
+  imaging AI (MRI, CT, X-ray, ultrasound, PET, retinal/fundus and OCT,
+  dermatology, endoscopy), medical image segmentation, classification,
+  detection, registration, and reconstruction, and biomedical and microscopy
+  image analysis. Explainable AI (XAI) and interpretability, including
+  interpretable machine learning, feature attribution and saliency methods
+  (SHAP, LIME, Grad-CAM, integrated gradients), concept-based and
+  counterfactual explanations, mechanistic interpretability of neural
+  networks and LLMs, and trustworthy, transparent AI, especially in
+  medicine and biology. AI and machine
+  learning for drug discovery and drug design (also called computational,
+  in silico, or computer-aided drug design, CADD, and cheminformatics),
+  including target identification, hit identification and lead
+  optimization; virtual screening, molecular docking, and protein-ligand
+  binding affinity prediction; structure-based and ligand-based drug design
+  and QSAR; molecular property and ADMET/toxicity prediction; drug-target
+  and drug-drug interaction prediction; generative models for de novo
+  molecule, peptide, antibody, and protein design; drug repurposing and
+  repositioning; and retrosynthesis planning.
 
 # Separate short topic descriptions for the embedding pre-filter. Each
 # paper is scored against every topic and keeps its BEST match, so a paper
 # about just one area isn't diluted by the others. Add/remove freely.
-# (interest_description above is still what Claude sees in the final pass.)
 # Delete this whole list to fall back to the single-paragraph behaviour.
 interest_topics:
-  - "Large language models, deep learning architectures, and reasoning and evaluation methods for AI."
-  - "AI and machine learning applied to healthcare, electronic health records (EHR), clinical decision support, and clinical NLP."
-  - "Computational pathology: deep learning for histopathology, whole-slide images, and cell and tissue image analysis."
-  - "Genomics and bioinformatics methods, including machine learning on genomic, transcriptomic, single-cell, and multi-omics data."
+  # --- LLMs and deep learning ---
+  - "Large language models (LLMs), foundation models, and generative AI: pretraining, instruction tuning, RLHF, alignment, and multimodal and vision-language models."
+  - "Reasoning in language models: chain-of-thought, in-context learning, retrieval-augmented generation (RAG), tool use and LLM agents, hallucination, and benchmarks and evaluation methods."
+  - "Deep learning architectures and training methods: transformers, attention, state space models, mixture-of-experts, graph neural networks, diffusion models, and efficient training and inference."
+  # --- Healthcare / EHR / clinical NLP ---
+  - "AI and machine learning in healthcare and medicine: electronic health records (EHR/EMR), clinical risk prediction, patient outcome prediction, and clinical decision support systems."
+  - "Clinical NLP and medical language models: biomedical and medical natural language processing, clinical notes, information extraction from clinical text, and LLMs for medicine."
+  # --- Computational pathology ---
+  - "Computational and digital pathology: deep learning on histopathology and whole-slide images (WSI), H&E slides, multiple instance learning, and pathology foundation models."
+  - "Cell and tissue image analysis with AI: cell and nucleus segmentation and classification, microscopy image analysis, and spatial transcriptomics and spatial omics."
+  # --- Genomics / bioinformatics ---
+  - "Genomics and bioinformatics methods: computational biology, machine learning on DNA sequences, genomic language models, variant effect prediction, and gene expression and regulatory genomics."
+  - "Machine learning on single-cell (scRNA-seq), transcriptomic, epigenomic, proteomic, and multi-omics data, including multi-omics integration and cell type annotation."
+  # --- Medical / biomedical image processing ---
+  - "Medical image analysis with deep learning: radiology AI, MRI, CT, X-ray, ultrasound, and PET image segmentation, classification, and detection."
+  - "Medical and biomedical image processing: image registration, reconstruction, denoising, and super-resolution, plus retinal/fundus, OCT, dermatology, and endoscopy imaging AI and medical imaging foundation models."
+  # --- Explainable AI ---
+  - "Explainable AI (XAI) and interpretable machine learning: feature attribution, saliency maps, SHAP, LIME, Grad-CAM, integrated gradients, and concept-based and counterfactual explanations."
+  - "Mechanistic interpretability of neural networks and language models, and explainable, transparent, and trustworthy AI for clinical and biomedical decision making."
+  # --- Drug discovery ---
   - "AI and machine learning for drug discovery and drug design: computational, in silico, and computer-aided drug design (CADD), cheminformatics, target and hit identification, lead optimization."
   - "Virtual screening, molecular docking, and deep learning for protein-ligand binding affinity and drug-target interaction prediction."
   - "Generative models for de novo design of small molecules, peptides, antibodies, and proteins."
@@ -46,15 +81,14 @@ min_relevance_score: 0.30
 
 # Max number of pre-filtered candidates sent to Claude for the final
 # relevance judgment + digest write-up. Keeps API cost bounded.
-# Raised from 30 to make room for the extra drug discovery topic.
-max_candidates_for_llm: 40
+max_candidates_for_llm: 50
 
 # Max number of papers included in the final digest.
-max_digest_items: 20
+max_digest_items: 25
 
 # How many days back to look for new papers on each run.
 # Keep this >= your run frequency so nothing slips through gaps.
-# Set to 8 for a weekly run (7 days + 1 day overlap).
+# 8 = weekly run (7 days + 1 day overlap).
 lookback_days: 8
 
 # ---------------------------------------------------------------------
@@ -63,30 +97,33 @@ lookback_days: 8
 sources:
   arxiv:
     enabled: true
-    # q-bio.BM = Biomolecules (molecular design, binding, protein-ligand work)
-    categories: ["cs.AI", "cs.LG", "cs.CL", "q-bio.GN", "q-bio.QM", "q-bio.BM"]
-    max_results: 100
+    # q-bio.BM = Biomolecules, q-bio.TO = Tissues and Organs,
+    # eess.IV = Image and Video Processing (much medical/pathology imaging),
+    # physics.med-ph = Medical Physics (MRI/CT reconstruction, imaging)
+    categories: ["cs.AI", "cs.LG", "cs.CL", "q-bio.GN", "q-bio.QM", "q-bio.BM", "q-bio.TO", "eess.IV", "physics.med-ph"]
+    # Raised for a weekly window across 8 categories.
+    max_results: 300
 
   pubmed:
     enabled: true
-    # PubMed has no useful category system for this; use search terms.
+    # PubMed boolean syntax: each line is one search. Grouping synonyms
+    # with OR keeps the number of requests low.
     search_terms:
-      - "artificial intelligence electronic health record"
-      - "deep learning clinical decision support"
-      - "AI digital pathology"
-      - "machine learning genomics"
-      - "AI bioinformatics"
-      - "machine learning drug discovery"
-      - "artificial intelligence drug design"
-      - "computer-aided drug design deep learning"
-      - "in silico drug discovery machine learning"
-      - "cheminformatics deep learning"
-      - "deep learning virtual screening"
-      - "binding affinity prediction deep learning"
-      - "deep learning drug-target interaction"
-      - "generative model de novo drug design"
-      - "machine learning drug repurposing"
-      - "ADMET prediction machine learning"
+      - '("large language model" OR "foundation model" OR "generative AI" OR ChatGPT OR GPT-4) AND (medicine OR clinical OR biomedical)'
+      - '("artificial intelligence" OR "machine learning" OR "deep learning") AND ("electronic health record" OR "electronic medical record" OR EHR OR EMR)'
+      - '("artificial intelligence" OR "machine learning" OR "deep learning") AND ("clinical decision support" OR "risk prediction" OR "outcome prediction" OR "prognostic model")'
+      - '("natural language processing" OR NLP OR "language model") AND ("clinical notes" OR "clinical text" OR "medical text" OR "biomedical text")'
+      - '("deep learning" OR "artificial intelligence" OR "machine learning") AND ("digital pathology" OR "computational pathology" OR histopathology OR "whole slide image")'
+      - '("deep learning" OR "machine learning") AND ("cell segmentation" OR "nucleus segmentation" OR "spatial transcriptomics" OR "microscopy image")'
+      - '("machine learning" OR "deep learning" OR "artificial intelligence") AND (genomics OR bioinformatics OR "computational biology" OR "variant effect" OR "gene expression")'
+      - '("machine learning" OR "deep learning") AND ("single-cell" OR scRNA-seq OR transcriptomics OR proteomics OR epigenomics OR multi-omics OR multiomics)'
+      - '("deep learning" OR "artificial intelligence" OR "machine learning") AND ("medical image" OR "medical imaging" OR radiology OR MRI OR "computed tomography" OR ultrasound OR "chest X-ray")'
+      - '("deep learning" OR "convolutional neural network" OR transformer) AND ("image segmentation" OR "image registration" OR "image reconstruction" OR "biomedical image" OR fundus OR "optical coherence tomography" OR dermoscopy OR endoscopy)'
+      - '("explainable artificial intelligence" OR "explainable AI" OR XAI OR interpretability OR interpretable OR SHAP OR LIME OR Grad-CAM OR "saliency map") AND ("machine learning" OR "deep learning")'
+      - '("machine learning" OR "deep learning" OR "artificial intelligence") AND ("drug discovery" OR "drug design" OR "computer-aided drug design" OR "in silico drug" OR cheminformatics)'
+      - '("machine learning" OR "deep learning") AND ("virtual screening" OR "molecular docking" OR "binding affinity" OR "drug-target interaction")'
+      - '("generative model" OR "deep learning" OR "diffusion model") AND ("de novo design" OR "molecule generation" OR "protein design" OR "antibody design")'
+      - '("machine learning" OR "deep learning") AND (ADMET OR toxicity OR QSAR OR "drug repurposing" OR "drug repositioning" OR "drug-drug interaction")'
     max_results: 60
 
   biorxiv_medrxiv:
@@ -96,7 +133,7 @@ sources:
 
   semantic_scholar:
     enabled: true
-    query: "AI healthcare OR machine learning genomics OR AI pathology OR clinical NLP OR machine learning drug discovery OR AI drug design OR deep learning virtual screening"
+    query: "large language models medicine OR clinical NLP OR electronic health records machine learning OR computational pathology OR single-cell deep learning OR genomics machine learning OR AI drug discovery OR molecular generation OR medical image segmentation OR radiology deep learning OR explainable AI OR interpretability"
     max_results: 60
     # Optional: get a free key at https://www.semanticscholar.org/product/api
     # to raise rate limits. Leave blank to use the public (lower) rate limit.
@@ -104,12 +141,13 @@ sources:
 
   europe_pmc:
     enabled: true
-    query: '("artificial intelligence" OR "machine learning" OR "deep learning") AND ("electronic health record" OR pathology OR genomics OR bioinformatics OR "drug discovery" OR "drug design" OR "drug repurposing" OR "virtual screening" OR cheminformatics OR "molecular docking" OR "de novo design")'
+    query: '("artificial intelligence" OR "machine learning" OR "deep learning" OR "large language model" OR "foundation model") AND ("electronic health record" OR "electronic medical record" OR "clinical decision support" OR "clinical NLP" OR "clinical notes" OR "digital pathology" OR "computational pathology" OR histopathology OR "whole slide image" OR genomics OR bioinformatics OR "computational biology" OR "single-cell" OR transcriptomics OR "multi-omics" OR proteomics OR "drug discovery" OR "drug design" OR "drug repurposing" OR "virtual screening" OR cheminformatics OR "molecular docking" OR "de novo design" OR "medical image" OR "medical imaging" OR radiology OR MRI OR "image segmentation" OR "explainable AI" OR "explainable artificial intelligence" OR XAI OR interpretability)'
     max_results: 60
 
   openalex:
     enabled: true
-    query: "AI healthcare electronic health record pathology genomics bioinformatics drug discovery"
+    # OpenAlex supports boolean search (uppercase AND / OR, quoted phrases).
+    query: '("machine learning" OR "deep learning" OR "artificial intelligence" OR "language model") AND ("electronic health record" OR "clinical decision support" OR "clinical NLP" OR "computational pathology" OR histopathology OR genomics OR bioinformatics OR "single-cell" OR "multi-omics" OR "drug discovery" OR "drug design" OR "virtual screening" OR "medical image" OR "medical imaging" OR radiology OR "image segmentation" OR "explainable AI" OR "explainable artificial intelligence" OR interpretability)'
     max_results: 60
     # Optional but recommended: your email, for OpenAlex's polite pool
     # (higher rate limits, no key required).
@@ -163,4 +201,4 @@ llm:
   model: "claude-haiku-4-5-20251001"
   # Raised from 2000: with more candidates the JSON reply can get cut off,
   # and a truncated reply makes summarizer.py silently return an empty digest.
-  max_tokens: 4000
+  max_tokens: 5000
